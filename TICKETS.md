@@ -424,33 +424,67 @@ Mettre en cache les réponses pour :
 
 ---
 
-## 📝 Format de Rendu
+## 📝 Workflow Git & Pull Requests
 
-Pour chaque ticket résolu, documentez dans `RAPPORT.md` :
+### Setup initial (une seule fois)
 
-```markdown
-## ✅ [TICKET-ID] Titre du ticket
+1. **Forker le repository** sur GitHub : https://github.com/voidagency/stages-fullstack-challenge.git
+2. **Cloner votre fork** :
+   ```bash
+   git clone https://github.com/VOTRE-USERNAME/stages-fullstack-challenge.git
+   cd stages-fullstack-challenge
+   ```
 
-**Statut** : ✅ Résolu / ⏳ En cours / ❌ Non résolu
+### Pour chaque ticket résolu
 
-### Problème identifié
-[Cause racine en 2-3 phrases]
+#### 1. Créer une branche
 
-### Solution implémentée
-[Votre correction]
+```bash
+git checkout main
+git pull origin main
+git checkout -b BUG-001
+```
 
-### Fichiers modifiés
-- chemin/fichier1.php (lignes X-Y)
-- chemin/fichier2.js (lignes Z)
+**Convention simple** : `BUG-001`, `SEC-002`, `PERF-001`, etc.
 
-### Comment tester
-[Instructions pour vérifier que ça marche]
+#### 2. Faire vos corrections
 
-### Temps passé
-~X heures
+- Committez régulièrement avec des messages clairs
+- Exemple : `fix(search): correct collation for accent search [BUG-001]`
+
+```bash
+git add .
+git commit -m "fix(search): correct collation for accent search [BUG-001]"
+git push origin BUG-001
+```
+
+#### 3. Créer une Pull Request
+
+Sur GitHub, créez une PR de `BUG-001` vers `main` (dans votre fork).
+
+**Titre de la PR** : `[BUG-001] La recherche ne fonctionne pas avec les accents`
+
+GitHub affichera automatiquement le template `.github/pull_request_template.md`.
+
+**Remplissez toutes les sections** :
+- Problème identifié
+- Solution implémentée
+- Tests effectués
+- Réponse aux questions à considérer
+
+#### 4. Merger la PR
+
+Une fois vos tests passés, mergez la PR dans votre branche main.
+
+#### 5. Répéter pour chaque ticket
+
+Retournez à l'étape 1 pour le ticket suivant.
 
 ---
-```
+
+### Template de Pull Request
+
+Le template complet est disponible dans `.github/pull_request_template.md` et s'affiche automatiquement lors de la création d'une PR sur GitHub
 
 ---
 

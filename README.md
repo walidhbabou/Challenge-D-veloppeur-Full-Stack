@@ -49,12 +49,19 @@ docker-compose up -d
 
 Puis suivez les instructions dans `project/README.md`
 
-### 4. Résolvez les tickets
-Travaillez sur le code, corrigez les bugs, documentez vos solutions
+### 4. Forkez le repository (important !)
+👉 Forkez https://github.com/voidagency/stages-fullstack-challenge.git sur votre compte GitHub
 
-### 5. Soumettez votre travail
-- Code corrigé (via Git)
-- Rapport de corrections (voir CHALLENGE.md pour le format)
+### 5. Résolvez les tickets
+- Créez une branche par ticket (`BUG-001`, `SEC-002`, etc.)
+- Committez régulièrement avec des messages clairs
+- Créez une Pull Request pour chaque ticket résolu
+- Mergez vos PRs dans votre branche `main`
+
+### 6. Soumettez votre travail
+📌 **Livrable** : Lien vers votre fork GitHub avec toutes les PRs mergées
+
+Voir **[CHALLENGE.md](./CHALLENGE.md)** pour les détails du workflow Git
 
 ---
 

@@ -115,11 +115,20 @@ Les tickets couvrent :
 
 ## 🚀 Instructions de Travail
 
+### 0. Forker le repository (IMPORTANT)
+
+**Avant tout**, forkez le repository sur votre compte GitHub :
+
+👉 https://github.com/voidagency/stages-fullstack-challenge.git
+
+Cliquez sur le bouton **"Fork"** en haut à droite.
+
 ### 1. Setup de l'environnement
 
 ```bash
-# Cloner le projet (ou extraire le ZIP fourni)
-cd project
+# Cloner VOTRE fork
+git clone https://github.com/VOTRE-USERNAME/stages-fullstack-challenge.git
+cd stages-fullstack-challenge/project
 
 # Lancer Docker
 docker-compose up -d
@@ -138,37 +147,39 @@ Suivez les instructions détaillées dans `project/README.md`
 
 ### 3. Résolution des tickets
 
-Consultez **[TICKETS.md](./TICKETS.md)** pour la liste complète.
+Consultez **[TICKETS.md](./TICKETS.md)** pour la liste complète et le workflow Git détaillé.
+
+**Workflow pour chaque ticket** :
+- ✅ Créez une branche dédiée (`BUG-001`, `SEC-002`, etc.)
+- ✅ Faites vos corrections et committez régulièrement
+- ✅ Créez une Pull Request avec une description complète
+- ✅ Mergez la PR une fois les tests passés
+- ✅ Passez au ticket suivant
 
 **Conseils** :
-- ✅ Commencez par les tickets qui vous semblent accessibles
-- ✅ Lisez bien la description de chaque ticket
-- ✅ Testez vos corrections avant de passer au suivant
-- ✅ Committez régulièrement avec des messages clairs
+- 🎯 Commencez par les tickets qui vous semblent accessibles
+- 📖 Lisez bien la description de chaque ticket
+- 🧪 Testez vos corrections avant de merger
+- 💬 Messages de commit clairs : `fix(search): correct collation [BUG-001]`
 
-### 4. Documentation de votre travail
+### 4. Documentation via Pull Requests
 
-Pour chaque ticket résolu, documentez dans un fichier **`RAPPORT.md`** :
+Pour chaque ticket résolu, **créez une Pull Request** avec une description complète.
 
-```markdown
-## [BUG-001] Recherche ne fonctionne pas avec accents
+GitHub affichera automatiquement le template `.github/pull_request_template.md` lors de la création.
 
-### Problème identifié
-[Expliquez la cause racine du bug]
+**Remplissez toutes les sections** :
+- 📋 Problème identifié (cause racine)
+- 🛠️ Solution implémentée (changements techniques)
+- ✅ Tests effectués (comment vérifier)
+- 💭 Réponses aux questions à considérer
 
-### Solution appliquée
-[Décrivez votre correction]
-
-### Fichiers modifiés
-- `backend/app/Http/Controllers/ArticleController.php` (ligne 45-50)
-- `backend/config/database.php` (ligne 60)
-
-### Tests effectués
-[Comment avez-vous vérifié que ça fonctionne ?]
-
-### Réponse à la question à considérer
-[Répondez à la question à considérer]
+**Exemple de titre de PR** :
 ```
+[BUG-001] La recherche ne fonctionne pas avec les accents
+```
+
+La description de la PR remplace le traditionnel fichier `RAPPORT.md` et offre une meilleure traçabilité
 
 ---
 
@@ -194,31 +205,35 @@ Lors de l'entretien oral qui suivra, vous devrez :
 
 ## 📦 Livrables Attendus
 
-### 1. Code source corrigé
+### 1. Fork GitHub avec Pull Requests
 
-Soumettez via :
-- **Git repository** (GitHub, GitLab, etc.)
-- Ou **ZIP** du projet complet
+**Livrable principal** : Lien vers votre fork GitHub
+
+📌 **Format de soumission** :
+```
+https://github.com/VOTRE-USERNAME/stages-fullstack-challenge
+```
 
 Assurez-vous que :
-- ✅ Le code est fonctionnel
-- ✅ Les corrections sont committées avec des messages clairs
+- ✅ Toutes les PRs sont **mergées** dans votre branche `main`
+- ✅ Les PRs sont **visibles** et bien documentées
+- ✅ Chaque PR correspond à un ticket résolu
+- ✅ L'historique Git est **propre** avec des commits explicites
+
+### 2. Code fonctionnel
+
+Votre branche `main` doit contenir :
+- ✅ Le code corrigé et fonctionnel
 - ✅ Le projet peut être lancé via Docker
+- ✅ Les corrections sont testables
 
-### 2. Rapport de corrections (`RAPPORT.md`)
+### 3. Pull Requests bien documentées
 
-Fichier à placer à la racine du projet, contenant :
-- Liste des tickets résolus
-- Explication de chaque correction
-- Difficultés rencontrées
-- Tickets non résolus (et pourquoi)
-
-### 3. Instructions de test
-
-Dans votre `RAPPORT.md`, incluez :
-- Comment lancer l'application
-- Comment tester chaque correction
-- Éventuelles notes pour l'évaluateur
+Chaque PR doit inclure :
+- 📋 Description du problème identifié
+- 🛠️ Solution technique implémentée
+- ✅ Tests effectués et validés
+- 💭 Réponses aux questions à considérer (voir TICKETS.md)
 
 ---
 
@@ -229,7 +244,7 @@ Dans votre `RAPPORT.md`, incluez :
 **Minimum requis** : 
 - ✅ Au moins **60 points sur 86** (≈70%) - soit environ **7-8 tickets résolus sur 10**
 - ✅ Code fonctionnel et bien structuré
-- ✅ Rapport de corrections complet
+- ✅ Pull Requests bien documentées
 
 **Bonus appréciés** :
 - 🌟 Tous les tickets résolus (10/10) avec les bonus frontend
@@ -296,7 +311,7 @@ Si vous atteignez le seuil requis (70%), vous serez invité à un **entretien te
 | **Phase 2 - Sécurité critique** | 2-3h | SEC-001, SEC-002 | 2 tickets critiques |
 | **Phase 3 - Performance** | 2h | PERF-001, PERF-003 | 2 tickets moyens |
 | **Phase 4 - Complexe** | 2-3h | BUG-003, SEC-003, PERF-002 | 3 tickets difficiles |
-| **Documentation** | 1h | Rédaction du rapport RAPPORT.md | - |
+| **Documentation** | 1h | Rédaction des Pull Requests | - |
 | **Tests finaux** | 30min | Vérification globale | - |
 
 **Total réaliste : 8-10h pour 7-8 tickets résolus**
@@ -322,7 +337,7 @@ Si vous atteignez le seuil requis (70%), vous serez invité à un **entretien te
 
 Si vous êtes bloqué plus de **2 heures** sur un ticket :
 - ✅ Passez au suivant, revenez-y plus tard
-- ✅ Documentez le blocage dans votre rapport
+- ✅ Documentez le blocage dans la description de votre PR
 - ✅ En cas d'urgence : contactez le recruteur
 
 **Important** : Votre capacité à vous débloquer fait partie de l'évaluation !
