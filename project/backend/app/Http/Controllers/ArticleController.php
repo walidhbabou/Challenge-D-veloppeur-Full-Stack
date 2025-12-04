@@ -72,20 +72,48 @@ class ArticleController extends Controller
             return response()->json([]);
         }
 
-        $articles = DB::select(
-            "SELECT * FROM articles WHERE title LIKE '%" . $query . "%'"
-        );
+        // Normaliser la recherche (enlever les accents)
+        $normalizedQuery = $this->removeAccents(strtolower($query));
 
-        $results = array_map(function ($article) {
+        // Récupérer tous les articles
+        $articles = Article::all();
+
+        // Filtrer en PHP avec normalisation
+        $results = $articles->filter(function ($article) use ($normalizedQuery) {
+            $normalizedTitle = $this->removeAccents(strtolower($article->title));
+            $normalizedContent = $this->removeAccents(strtolower($article->content));
+            
+            return str_contains($normalizedTitle, $normalizedQuery) || 
+                   str_contains($normalizedContent, $normalizedQuery);
+        })->map(function ($article) {
             return [
                 'id' => $article->id,
                 'title' => $article->title,
                 'content' => substr($article->content, 0, 200),
                 'published_at' => $article->published_at,
             ];
-        }, $articles);
+        })->values();
 
         return response()->json($results);
+    }
+
+    /**
+     * Remove accents from a string.
+     */
+    private function removeAccents($string)
+    {
+        $accents = [
+            'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a', 'å' => 'a',
+            'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e',
+            'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i',
+            'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o', 'ö' => 'o',
+            'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ü' => 'u',
+            'ý' => 'y', 'ÿ' => 'y',
+            'ç' => 'c', 'ñ' => 'n',
+            'œ' => 'oe', 'æ' => 'ae',
+        ];
+
+        return strtr($string, $accents);
     }
 
     /**
