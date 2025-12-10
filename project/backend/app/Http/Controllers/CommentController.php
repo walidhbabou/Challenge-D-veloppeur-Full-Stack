@@ -32,6 +32,9 @@ class CommentController extends Controller
             'content' => 'required|string',
         ]);
 
+        // Sanitize content to prevent XSS - htmlspecialchars keeps the text visible
+        $validated['content'] = htmlspecialchars($validated['content'], ENT_QUOTES, 'UTF-8');
+
         $comment = Comment::create($validated);
         $comment->load('user');
 
@@ -67,6 +70,9 @@ class CommentController extends Controller
         $validated = $request->validate([
             'content' => 'required|string',
         ]);
+
+        // Sanitize content to prevent XSS - htmlspecialchars keeps the text visible
+        $validated['content'] = htmlspecialchars($validated['content'], ENT_QUOTES, 'UTF-8');
 
         $comment->update($validated);
 
