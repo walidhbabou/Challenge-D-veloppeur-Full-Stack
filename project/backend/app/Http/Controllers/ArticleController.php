@@ -5,13 +5,31 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
 class ArticleController extends Controller
 {
     /**
      * Display a listing of articles.
+     * Cache for 1 minute (60 seconds) unless performance_test mode.
      */
     public function index(Request $request)
+    {
+        // Skip cache in performance test mode
+        if ($request->has('performance_test')) {
+            return $this->getArticles($request);
+        }
+
+        // Cache for 1 minute
+        return Cache::remember('api.articles', 60, function () use ($request) {
+            return $this->getArticles($request);
+        });
+    }
+
+    /**
+     * Get articles data (extracted for caching).
+     */
+    private function getArticles(Request $request)
     {
         $articles = Article::with(['author', 'comments'])->get();
 
@@ -136,6 +154,10 @@ class ArticleController extends Controller
             'published_at' => now(),
         ]);
 
+        // Invalidate cache
+        Cache::forget('api.articles');
+        Cache::forget('api.stats');
+
         return response()->json($article, 201);
     }
 
@@ -153,6 +175,10 @@ class ArticleController extends Controller
 
         $article->update($validated);
 
+        // Invalidate cache
+        Cache::forget('api.articles');
+        Cache::forget('api.stats');
+
         return response()->json($article);
     }
 
@@ -163,6 +189,10 @@ class ArticleController extends Controller
     {
         $article = Article::findOrFail($id);
         $article->delete();
+
+        // Invalidate cache
+        Cache::forget('api.articles');
+        Cache::forget('api.stats');
 
         return response()->json(['message' => 'Article deleted successfully']);
     }

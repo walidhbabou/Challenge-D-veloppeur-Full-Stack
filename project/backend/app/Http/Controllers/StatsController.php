@@ -6,17 +6,20 @@ use App\Models\Article;
 use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
 class StatsController extends Controller
 {
     /**
      * Get blog statistics.
+     * Cache for 5 minutes (300 seconds).
      */
     public function index()
     {
-        $totalArticles = Article::count();
-        $totalComments = Comment::count();
-        $totalUsers = User::count();
+        return Cache::remember('api.stats', 300, function () {
+            $totalArticles = Article::count();
+            $totalComments = Comment::count();
+            $totalUsers = User::count();
 
         $mostCommented = Article::select('articles.*', DB::raw('COUNT(comments.id) as comments_count'))
             ->leftJoin('comments', 'articles.id', '=', 'comments.article_id')
@@ -51,6 +54,7 @@ class StatsController extends Controller
                 ];
             }),
         ]);
+        });
     }
 }
 
