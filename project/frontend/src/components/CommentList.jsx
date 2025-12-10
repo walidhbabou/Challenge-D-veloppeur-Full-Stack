@@ -1,6 +1,13 @@
 import { useState, useEffect } from 'react';
 import { getComments, createComment, deleteComment } from '../services/api';
 
+// Helper function to decode HTML entities
+const decodeHtml = (html) => {
+  const txt = document.createElement('textarea');
+  txt.innerHTML = html;
+  return txt.value;
+};
+
 function CommentList({ articleId }) {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
@@ -76,10 +83,9 @@ function CommentList({ articleId }) {
                 position: 'relative'
               }}
             >
-              <div 
-                dangerouslySetInnerHTML={{ __html: comment.content }}
-                style={{ marginBottom: '0.5rem' }}
-              />
+                <div style={{ marginBottom: '0.5rem' }}>
+                {decodeHtml(comment.content)}
+              </div>
               
               <div style={{ fontSize: '0.85em', color: '#7f8c8d' }}>
                 — {comment.user?.name || 'Utilisateur'}
